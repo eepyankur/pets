@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "../services/GlobalContextProvider.tsx";
 import Loading from "../components/Loading.tsx";
 import ErrorBoundary from "./ErrorBoundary.tsx";
 import NoData from "./NoData.tsx";
@@ -23,7 +24,8 @@ interface Data {
 }
 
 function PetList() {
-  const [page, setPage] = useState<number>(0);
+  const { state, dispatch } = useGlobalContext();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>("");
   const [data, setData] = useState<Data>({
@@ -40,7 +42,7 @@ function PetList() {
     (async () => {
       try {
         const response = await fetch(
-          `http://pets-v2.dev-apis.com/pets?page=${page}`,
+          `http://pets-v2.dev-apis.com/pets?page=${state.page}`,
         );
         if (!response.ok) throw new Error("Something is wrong with response");
 
@@ -52,7 +54,7 @@ function PetList() {
         setIsLoading(false);
       }
     })();
-  }, [page]);
+  }, [state.page]);
 
   return (
     <>
@@ -120,20 +122,20 @@ function PetList() {
                     "absolute left-10 h-fit w-fit text-blue-500 underline-offset-4 hover:underline"
                   }
                   onClick={() => {
-                    setPage((page) => page - 1);
+                    dispatch({ type: "setPage", payload: state.page - 1 });
                   }}
                 >
                   previous
                 </button>
               )}
-              <p>{page + 1}</p>
+              <p>{state.page + 1}</p>
               {data.hasNext && (
                 <button
                   className={
                     "absolute right-10 h-fit w-fit text-blue-500 underline-offset-4 hover:underline"
                   }
                   onClick={() => {
-                    setPage((page) => page + 1);
+                    dispatch({ type: "setPage", payload: state.page + 1 });
                   }}
                 >
                   next

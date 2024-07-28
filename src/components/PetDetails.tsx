@@ -14,66 +14,60 @@ export default function PetDetails() {
         (!data.numberOfResults ? (
           <NoData />
         ) : (
-          <div className={"relative h-full w-full"}>
-            <div
-              className="flex h-fit w-full flex-col gap-10"
-              key={data.pets[0].id}
-            >
-              <h2 className="w-full text-center font-semibold capitalize italic tracking-widest">
-                Pet Details
-              </h2>
-              <table className="w-full table-auto border-separate border-spacing-5 capitalize md:border-spacing-x-10">
-                <tbody>
-                  <tr>
-                    <td className="font-bold">ID</td>
-                    <td>{data.pets[0].id}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold">Animal</td>
-                    <td>{data.pets[0].animal}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold">Breed</td>
-                    <td>{data.pets[0].breed}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold">City</td>
-                    <td>{data.pets[0].city}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold">State</td>
-                    <td>{data.pets[0].state}</td>
-                  </tr>
-                  <tr>
-                    <td className="font-bold">Name</td>
-                    <td>{data.pets[0].name}</td>
-                  </tr>
-                  <tr>
-                    <td className="flex self-start font-bold">Description</td>
-                    <td className={"text-balance normal-case"}>
-                      {data.pets[0].description}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <h2 className="w-full text-center font-semibold italic tracking-widest">
-                {data.pets[0].name}'s Images
-              </h2>
-              <div className="flex h-fit w-full flex-wrap items-center justify-center gap-2 pb-20">
-                {data.pets[0].images.map((image, index) => (
-                  <a
-                    key={data.pets[0].name + index}
-                    href={image}
-                    target="_blank"
-                  >
-                    <img
-                      src={image}
-                      alt={data.pets[0].name + index}
-                      className="aspect-square max-w-[500px] object-cover object-center transition-transform duration-100 ease-linear hover:scale-95"
-                    />
-                  </a>
-                ))}
-              </div>
+          <div
+            className="relative my-20 flex h-fit w-full flex-col gap-10"
+            key={data.pets[0].id}
+          >
+            <h2 className="w-full text-center font-semibold capitalize italic tracking-widest">
+              Pet Details
+            </h2>
+            <table className="w-full table-auto border-separate border-spacing-5 capitalize md:border-spacing-x-10">
+              <tbody>
+                <tr>
+                  <td className="font-bold">ID</td>
+                  <td>{data.pets[0].id}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold">Animal</td>
+                  <td>{data.pets[0].animal}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold">Breed</td>
+                  <td>{data.pets[0].breed}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold">City</td>
+                  <td>{data.pets[0].city}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold">State</td>
+                  <td>{data.pets[0].state}</td>
+                </tr>
+                <tr>
+                  <td className="font-bold">Name</td>
+                  <td>{data.pets[0].name}</td>
+                </tr>
+                <tr>
+                  <td className="flex self-start font-bold">Description</td>
+                  <td className={"text-balance normal-case"}>
+                    {data.pets[0].description}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <h2 className="w-full text-center font-semibold italic tracking-widest">
+              {data.pets[0].name}'s Images
+            </h2>
+            <div className="flex h-fit w-full flex-wrap items-center justify-center gap-2">
+              {data.pets[0].images.map((image, index) => (
+                <a key={data.pets[0].name + index} href={image} target="_blank">
+                  <img
+                    src={image}
+                    alt={data.pets[0].name + index}
+                    className="aspect-square max-w-[500px] object-cover object-center transition-transform duration-100 ease-linear hover:scale-95"
+                  />
+                </a>
+              ))}
             </div>
           </div>
         ))}

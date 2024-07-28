@@ -2,12 +2,20 @@ import React, { createContext, useContext, useReducer } from "react";
 
 interface GlobalContextState {
   page: number;
-  id: number;
+  id: number | null;
+  animal: string;
+  breed: string;
+  location: string;
+  name: string;
 }
 
 type GlobalContextAction =
   | { type: "setPage"; payload: number }
-  | { type: "setID"; payload: number };
+  | { type: "setID"; payload: number | null }
+  | { type: "setAnimal"; payload: string }
+  | { type: "setBreed"; payload: string }
+  | { type: "setLocation"; payload: string }
+  | { type: "setName"; payload: string };
 
 interface GlobalContextType {
   state: GlobalContextState;
@@ -25,13 +33,25 @@ function GlobalContextProvider({ children }: { children: React.ReactNode }) {
           return { ...prevState, page: action.payload };
         case "setID":
           return { ...prevState, id: action.payload };
+        case "setAnimal":
+          return { ...prevState, animal: action.payload };
+        case "setBreed":
+          return { ...prevState, breed: action.payload };
+        case "setLocation":
+          return { ...prevState, location: action.payload };
+        case "setName":
+          return { ...prevState, name: action.payload };
         default:
           return prevState;
       }
     },
     {
       page: 0,
-      id: 0,
+      id: null,
+      animal: "type",
+      breed: "breed",
+      location: "",
+      name: "",
     },
   );
 

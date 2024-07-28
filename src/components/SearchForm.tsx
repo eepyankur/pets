@@ -1,3 +1,6 @@
+// Search bar (name/location) + filter(type/breed)
+// Each field has custom clear button
+
 import { useGlobalContext } from "../services/GlobalContextProvider.tsx";
 import { useFetchBreeds } from "../services/FetchData.tsx";
 
@@ -6,11 +9,12 @@ export default function SearchForm() {
   const { data } = useFetchBreeds();
 
   return (
-    <form className="mb-20 mt-10 flex h-fit w-full flex-col items-center justify-center gap-5 rounded-none border-2 p-2 md:flex-row md:gap-10">
-      <div className={"relative flex h-full w-full"}>
+    <div className="mb-20 mt-10 flex h-fit w-full flex-col items-center justify-center gap-5 border-2 p-2 md:flex-row md:gap-10">
+      {/*name*/}
+      <div className={"relative w-full"}>
         <input
           type="text"
-          className={"h-fit w-full focus:outline-0"}
+          className={"h-fit w-full pl-1 focus:outline-0"}
           name="name"
           placeholder={"Name"}
           value={state.name}
@@ -29,10 +33,11 @@ export default function SearchForm() {
           </button>
         )}
       </div>
-      <div className={"relative flex h-full w-full"}>
+      {/*location*/}
+      <div className={"relative w-full"}>
         <input
           type="text"
-          className={"h-full w-full focus:outline-0"}
+          className={"h-fit w-full pl-1 focus:outline-0"}
           name="location"
           placeholder={"Location"}
           value={state.location}
@@ -51,9 +56,10 @@ export default function SearchForm() {
           </button>
         )}
       </div>
-      <div className={"relative flex h-full w-full"}>
+      {/*type*/}
+      <div className={"relative w-full"}>
         <select
-          className={"h-full w-full focus:outline-0"}
+          className={"h-fit w-full focus:outline-0"}
           name="type"
           id="type"
           value={state.animal}
@@ -64,10 +70,13 @@ export default function SearchForm() {
           }}
         >
           <option value="type" disabled>
-            Type
+            Select Type
           </option>
           <option value="cat">Cat</option>
           <option value="dog">Dog</option>
+          <option value="bird">Bird</option>
+          <option value="reptile">Reptile</option>
+          <option value="rabbit">Rabbit</option>
         </select>
         {state.animal !== "type" && (
           <button
@@ -82,9 +91,10 @@ export default function SearchForm() {
           </button>
         )}
       </div>
-      <div className={"relative flex h-full w-full"}>
+      {/*breed*/}
+      <div className={"relative w-full"}>
         <select
-          className={"h-full w-full focus:outline-0"}
+          className={"h-fit w-full focus:outline-0 disabled:text-red-300"}
           name="breed"
           id="breed"
           value={state.breed}
@@ -95,7 +105,7 @@ export default function SearchForm() {
           }}
         >
           <option value="breed" disabled>
-            Breed
+            Select Breed
           </option>
           {data.breeds.map((breed) => (
             <option key={breed} value={breed}>
@@ -115,6 +125,6 @@ export default function SearchForm() {
           </button>
         )}
       </div>
-    </form>
+    </div>
   );
 }

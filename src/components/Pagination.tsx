@@ -1,3 +1,5 @@
+// pagination for pet list to handle large datasets
+
 import { useGlobalContext } from "../services/GlobalContextProvider.tsx";
 import { ListData } from "../services/FetchData.tsx";
 

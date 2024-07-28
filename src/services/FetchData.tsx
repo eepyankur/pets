@@ -1,3 +1,6 @@
+// using the hooks to fetch data
+// returns {isLoading (boolean), error (string) and data}
+
 import { useEffect, useState } from "react";
 import { useGlobalContext } from "./GlobalContextProvider.tsx";
 
@@ -33,6 +36,7 @@ interface BreedsData {
   breeds: string[];
 }
 
+// fetches list of pets (controlled race condition)
 function useFetchList() {
   const { state } = useGlobalContext();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -53,7 +57,7 @@ function useFetchList() {
     (async () => {
       try {
         const response = await fetch(
-          `http://pets-v2.dev-apis.com/pets?page=${state.page}&name=${state.name}&animal=${state.animal === "type" ? "" : state.animal}&breed=${state.breed === "breed" ? "" : state.breed}&location=${state.location}`,
+          `https://pets-v2.dev-apis.com/pets?page=${state.page}&name=${state.name}&animal=${state.animal === "type" ? "" : state.animal}&breed=${state.breed === "breed" ? "" : state.breed}&location=${state.location}`,
           { signal: abortController.signal },
         );
         if (!response.ok)
@@ -76,6 +80,7 @@ function useFetchList() {
   return { isLoading, error, data };
 }
 
+//fetches pet details through pet id
 function useFetchDetails() {
   const { state } = useGlobalContext();
 
@@ -90,13 +95,17 @@ function useFetchDetails() {
   });
 
   useEffect(() => {
-    if (state.id === null) return;
+    if (state.id === null) {
+      setIsLoading(false);
+      setError("Invalid pet ID");
+      return;
+    }
     setIsLoading(true);
     setError("");
     (async () => {
       try {
         const response = await fetch(
-          `http://pets-v2.dev-apis.com/pets?id=${state.id}`,
+          `https://pets-v2.dev-apis.com/pets?id=${state.id}`,
         );
         if (!response.ok)
           throw new Error("Something is wrong with details response");
@@ -113,6 +122,7 @@ function useFetchDetails() {
   return { isLoading, error, data };
 }
 
+//fetches list of breeds of animal (of selected type)
 function useFetchBreeds() {
   const { state } = useGlobalContext();
 
@@ -124,13 +134,16 @@ function useFetchBreeds() {
   });
 
   useEffect(() => {
-    if (state.animal === "type") return;
+    if (state.animal === "type") {
+      setIsLoading(false);
+      return;
+    }
     setIsLoading(true);
     setError("");
     (async () => {
       try {
         const response = await fetch(
-          `http://pets-v2.dev-apis.com/breeds?animal=${state.animal}`,
+          `https://pets-v2.dev-apis.com/breeds?animal=${state.animal}`,
         );
         if (!response.ok)
           throw new Error("Something is wrong with breed response");

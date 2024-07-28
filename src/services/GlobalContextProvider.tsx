@@ -64,9 +64,8 @@ function GlobalContextProvider({ children }: { children: React.ReactNode }) {
 
 function useGlobalContext() {
   const context = useContext(GlobalContext);
-  if (context === null) {
-    throw new Error("Global context is undefined");
-  }
+  if (context === null) throw new Error("Global context is undefined");
+
   return context;
 }
 

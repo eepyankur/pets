@@ -2,9 +2,12 @@ import React, { createContext, useContext, useReducer } from "react";
 
 interface GlobalContextState {
   page: number;
+  id: number;
 }
 
-type GlobalContextAction = { type: "setPage"; payload: number };
+type GlobalContextAction =
+  | { type: "setPage"; payload: number }
+  | { type: "setID"; payload: number };
 
 interface GlobalContextType {
   state: GlobalContextState;
@@ -20,12 +23,15 @@ function GlobalContextProvider({ children }: { children: React.ReactNode }) {
       switch (action.type) {
         case "setPage":
           return { ...prevState, page: action.payload };
+        case "setID":
+          return { ...prevState, id: action.payload };
         default:
           return prevState;
       }
     },
     {
       page: 0,
+      id: 0,
     },
   );
 
